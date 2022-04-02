@@ -1,1 +1,1 @@
-# scripts_collection
+# Powershell, Python, Bash Scripts and Snippets
