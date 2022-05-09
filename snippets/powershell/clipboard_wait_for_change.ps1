@@ -1,3 +1,5 @@
+# Wait for a change in clipboard
+
 function Get-ClipboardFirstLine {
     $cb = Get-Clipboard
     if ($cb -is [array]) {

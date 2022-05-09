@@ -1,3 +1,5 @@
+# Prompt user for answer
+
 do {
     $msg = 'Updates found, proceed with update? [Y/N]'
     $response = Read-Host -Prompt $msg

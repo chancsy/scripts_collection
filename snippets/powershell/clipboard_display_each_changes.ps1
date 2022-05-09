@@ -1,3 +1,5 @@
+#  Print every changes in clipboard
+
 function Get-ClipboardFirstLine {
     $cb = Get-Clipboard
     if ($cb -is [array]) {
