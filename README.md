@@ -1,5 +1,10 @@
 # Scripts and Snippets
 
+## File Operation (scripts\\file_op\\)
+| Filename | Function Names | Script Type | Description |
+|---|---|---|---|
+| filename_trim_leading_trailing_spaces.psm1 | Rename-FileNames | PowerShell | Remove leading and trailing spaces in filenames |
+
 ## PowerShell Snippets (snippets\\powershell\\)
 | Filename | Type | Description |
 |---|---|---|
