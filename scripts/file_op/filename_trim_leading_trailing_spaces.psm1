@@ -23,10 +23,6 @@ function Rename-FileName {
         [Parameter (Mandatory = $true)] [System.IO.FileSystemInfo]$File
     )
 
-    if (-Not (Test-Path -LiteralPath $Path)) {
-        Throw $("Path does not exist, script terminated.")
-    }
-
     $result = 0
     if ($File.BaseName.StartsWith(" ") -or $File.BaseName.EndsWith(" ")) {
         [System.IO.FileInfo]$File_Trimmed = Join-Path -Path (Split-Path $File -Parent) -ChildPath ($File.BaseName.Trim() + $File.Extension)
