@@ -14,7 +14,7 @@ function Build-FileList_FilesBeforeDir {
         $list = @(Get-ChildItem -File -Recurse -LiteralPath $path) # Add list of files first
         $list += @(Get-ChildItem -Directory -Recurse -LiteralPath $path) # Add list of directories next
     } else {
-        $list = @(Get-ChildItem -File -LiteralPath $path) # Add list of files first
+        $list = @(Get-ChildItem -LiteralPath $path)
     }
     return $list
 }
