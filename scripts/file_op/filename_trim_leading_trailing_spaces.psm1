@@ -20,13 +20,14 @@ function Build-FileList_FilesBeforeDir {
 }
 function Rename-FileName {
     param (
+        [Parameter (Mandatory = $true)] [System.IO.FileSystemInfo]$PathParent,
         [Parameter (Mandatory = $true)] [System.IO.FileSystemInfo]$File
     )
 
     $result = 0
     if ($File.BaseName.StartsWith(" ") -or $File.BaseName.EndsWith(" ")) {
         [System.IO.FileInfo]$File_Trimmed = Join-Path -Path (Split-Path $File -Parent) -ChildPath ($File.BaseName.Trim() + $File.Extension)
-        $Log_ChildPath_Trimmed = Get-ChildPath -ParentDir $pwd -File $File_Trimmed
+        $Log_ChildPath_Trimmed = Get-ChildPath -ParentDir $PathParent -File $File_Trimmed
         Rename-Item -LiteralPath $File -NewName $File_Trimmed
         $result = 1
     } else {
@@ -37,7 +38,7 @@ function Rename-FileName {
     } elseif ($File -is [System.IO.DirectoryInfo]) {
         $Log_Object_Type = "Dir "
     }
-    $Log_ChildPath_Original = Get-ChildPath -ParentDir $pwd -File $File
+    $Log_ChildPath_Original = Get-ChildPath -ParentDir $PathParent -File $File
     Write-Verbose $("$Log_Object_Type`: ""$Log_ChildPath_Original"" -> ""$Log_ChildPath_Trimmed""")
     return $result
 }
@@ -78,12 +79,27 @@ function Rename-FileNames {
         Throw $("Path does not exist, script terminated.")
     }
 
+    # Resolve path
+    if ([System.IO.Path]::IsPathRooted($Path)) {
+        if ((Get-Item -LiteralPath $Path) -is [System.IO.DirectoryInfo]) {
+            [System.IO.DirectoryInfo]$Path_Resolved = $Path
+        } else {
+            [System.IO.FileInfo]$Path_Resolved = $Path
+        }
+    } else {
+        if ((Get-Item -LiteralPath $Path) -is [System.IO.DirectoryInfo]) {
+            [System.IO.DirectoryInfo]$Path_Resolved = Join-Path -Path $PWD -ChildPath $Path
+        } else {
+            [System.IO.FileInfo]$Path_Resolved = Join-Path -Path $PWD -ChildPath $Path
+        }
+    }
+
     $Log_cntProcessed = 0
     $Log_cntUpdated = 0
 
-    $list = Build-FileList_FilesBeforeDir -Path $Path -Recurse $Recurse
+    $list = Build-FileList_FilesBeforeDir -Path $Path_Resolved -Recurse $Recurse
     $list | ForEach-Object {
-        $result = Rename-FileName -File $_
+        $result = Rename-FileName -PathParent $Path_Resolved -File $_
         if ($result -ne 0) {
             $Log_cntUpdated++
         }
