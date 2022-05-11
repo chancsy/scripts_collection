@@ -1,9 +1,24 @@
+function Debug-DisplayList {
+    param (
+        [Parameter (Mandatory = $true)] [array]$list
+    )
+    $msg = "List of items to be processed:"
+    Write-Debug $($msg+"-"*(80-$msg.Length))
+    $list | ForEach-Object {
+        Write-Debug $_
+    }
+    Write-Debug $("-"*80)
+}
 function Get-ChildPath {
     param (
         [Parameter (Mandatory = $true)] [String]$ParentDir,
         [Parameter (Mandatory = $true)] [System.IO.FileSystemInfo]$File
     )
-    return $File.FullName.Replace($ParentDir, "")
+    if ($ParentDir -eq $File.FullName) {
+        return "\" + $File.Name
+    } else {
+        return $File.FullName.Replace($ParentDir, "")
+    }
 }
 function Build-FileList_FilesBeforeDir {
     param (        
@@ -27,7 +42,11 @@ function Rename-FileName {
     $result = 0
     if ($File.BaseName.StartsWith(" ") -or $File.BaseName.EndsWith(" ")) {
         [System.IO.FileInfo]$File_Trimmed = Join-Path -Path (Split-Path $File -Parent) -ChildPath ($File.BaseName.Trim() + $File.Extension)
-        $Log_ChildPath_Trimmed = Get-ChildPath -ParentDir $PathParent -File $File_Trimmed
+        if ($PathParent.FullName -ne $File.FullName) {
+            $Log_ChildPath_Trimmed = Get-ChildPath -ParentDir $PathParent -File $File_Trimmed
+        } else {
+            $Log_ChildPath_Trimmed = "\" + $File.Name
+        }
         Rename-Item -LiteralPath $File -NewName $File_Trimmed
         $result = 1
     } else {
@@ -46,7 +65,7 @@ function Rename-FileNames {
     
 <#
 .SYNOPSIS
-    Trim leading and trailing spaces in filename of all files under a directory.
+    Trim leading and trailing spaces in filename of specified file or all files under a directory.
 
 .EXAMPLE
     Perform rename operation on files under "C:\MyFolder":
@@ -94,10 +113,13 @@ function Rename-FileNames {
         }
     }
 
+    Write-Debug $("Path given: $Path_Resolved")
+
     $Log_cntProcessed = 0
     $Log_cntUpdated = 0
 
     $list = Build-FileList_FilesBeforeDir -Path $Path_Resolved -Recurse $Recurse
+    Debug-DisplayList $list
     $list | ForEach-Object {
         $result = Rename-FileName -PathParent $Path_Resolved -File $_
         if ($result -ne 0) {
