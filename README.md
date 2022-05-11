@@ -3,6 +3,7 @@
 ## File Operation (scripts\\file_op\\)
 | Filename | Function Names | Script Type | Description |
 |---|---|---|---|
+| filecopy_with_timestamps.psm1 | Copy-ItemsWithTimeStamps | PowerShell | Copy files with time attributes. |
 | filename_trim_leading_trailing_spaces.psm1 | Rename-FileNames | PowerShell | Trim leading and trailing spaces in filename of specified file or all files under a directory. |
 
 ## PowerShell Snippets (snippets\\powershell\\)
