@@ -47,7 +47,8 @@ function Copy-ItemsWithTimeStampsCore {
     param (
         [Parameter (Mandatory = $true)] [System.IO.FileSystemInfo]$SrcParent,
         [Parameter (Mandatory = $true)] [System.IO.FileSystemInfo]$DestParent,
-        [Parameter (Mandatory = $true)] [System.IO.FileSystemInfo]$File
+        [Parameter (Mandatory = $true)] [System.IO.FileSystemInfo]$File,
+        [Parameter (Mandatory = $false)] [Bool]$Simulate
     )
     $Src_ChildPath = Get-ChildPath -ParentDir $SrcParent -File $File
     Write-Debug $("Source ChildPath is $Src_ChildPath")
@@ -79,10 +80,12 @@ function Copy-ItemsWithTimeStampsCore {
     }
 
     if ($continue -eq 'y') {
-        Copy-Item -LiteralPath $File.FullName -Destination $Dest -Force
-        Set-ItemProperty -LiteralPath $Dest -Name CreationTime -Value $File.CreationTime
-        Set-ItemProperty -LiteralPath $Dest -Name LastWriteTime -Value $File.LastWriteTime
-        Set-ItemProperty -LiteralPath $Dest -Name LastAccessTime -Value $File.LastAccessTime
+        if (-Not ($Simulate)) {
+            Copy-Item -LiteralPath $File.FullName -Destination $Dest -Force
+            Set-ItemProperty -LiteralPath $Dest -Name CreationTime -Value $File.CreationTime
+            Set-ItemProperty -LiteralPath $Dest -Name LastWriteTime -Value $File.LastWriteTime
+            Set-ItemProperty -LiteralPath $Dest -Name LastAccessTime -Value $File.LastAccessTime
+        }
 
         # Verbose Output
         if ($File -is [System.IO.FileInfo]) {
@@ -90,7 +93,7 @@ function Copy-ItemsWithTimeStampsCore {
         } elseif ($File -is [System.IO.DirectoryInfo]) {
             $Log_Object_Type = "Dir "
         }
-        Write-Verbose $("$Log_Object_Type`: ""$Src_ChildPath""")
+        Write-Verbose $("$Log_Object_Type`: ""$Src_ChildPath"" copied.")
     }
 }
 function Copy-ItemsWithTimeStamps {
@@ -109,6 +112,9 @@ function Copy-ItemsWithTimeStamps {
     Perform copy operation with verbose output:
         Copy-ItemsWithTimeStamps -Src "C:\MyFolder" -Dest "C:\MyFolder 2" -Verbose
 
+    Simulate copy operation:
+        Copy-ItemsChangedSizeOnly -Src "C:\MyFolder" -Dest "C:\MyFolder 2" -Verbose -Simulate
+
 .INPUTS
     String
 
@@ -124,7 +130,8 @@ function Copy-ItemsWithTimeStamps {
     param (
         [Parameter (Mandatory = $true)] [String]$Src,
         [Parameter (Mandatory = $true)] [String]$Dest,
-        [switch] $Recurse
+        [switch] $Recurse,
+        [switch] $Simulate
     )
 
     if (-Not (Test-Path -LiteralPath $Src)) {
@@ -165,8 +172,10 @@ function Copy-ItemsWithTimeStamps {
     $list = Build-FileList -Path $Src_Resolved -Recurse $Recurse
     Debug-DisplayList $list
     $list | ForEach-Object {
-        Copy-ItemsWithTimeStampsCore -SrcParent $Src_Resolved -DestParent $Dest_Resolved -File $_
+        Copy-ItemsWithTimeStampsCore -SrcParent $Src_Resolved -DestParent $Dest_Resolved -File $_ -Simulate $Simulate
     }
 }
 
 Export-ModuleMember -Function Copy-ItemsWithTimeStamps
+
+#to add -simulate switch
