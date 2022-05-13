@@ -138,6 +138,9 @@ function Copy-ItemsDifferentSizeOnly {
     if (-Not (Test-Path -LiteralPath $Src)) {
         Throw $("Source path does not exist, script terminated.")
     }
+    if ((Get-ChildItem -LiteralPath $Src | Select-Object -First 1).Count -eq 0) {
+        Throw "Source folder is empty"
+    }
 
     # Resolve path of $Src
     if ([System.IO.Path]::IsPathRooted($Src)) {
@@ -170,9 +173,6 @@ function Copy-ItemsDifferentSizeOnly {
         Write-Debug "Source path is a file"
     }
 
-    if (-Not (Test-Path -LiteralPath (Join-Path -Path $Src_Resolved -ChildPath "*"))) {
-        Throw "Source folder is empty"
-    }
     $list = Build-FileList -Path $Src_Resolved -Recurse $Recurse
     Debug-DisplayList $list
     $list | ForEach-Object {
