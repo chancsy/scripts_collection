@@ -1,5 +1,16 @@
 # Scripts and Snippets
 
+## Electronics (scripts\\electronics\\)
+| Filename | Function Names | Script Type | Description |
+|---|---|---|---|
+| main.py | - | Python | Script selector |
+| LM317_Rfb_E24.py | - | Python | Calculate E24 feedback resistor values combinations for LM317 |
+| LM317_Rfb_E48.py | - | Python | Calculate E48 feedback resistor values combinations for LM317 |
+| Vdivider_E24_with_Ilimit.py | - | Python | Calculate E24 resistor values combinations for voltage divider with current limit |
+| Vdivider_E24.py | - | Python | Calculate E24 resistor values combinations for voltage divider |
+| Vdivider_E48_with_Ilimit.py | - | Python | Calculate E48 resistor values combinations for voltage divider with current limit |
+| Vdivider_E48.py | - | Python | Calculate E48 resistor values combinations for voltage divider |
+
 ## File Operation (scripts\\file_op\\)
 | Filename | Function Names | Script Type | Description |
 |---|---|---|---|
