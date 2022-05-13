@@ -14,7 +14,8 @@
 ## File Operation (scripts\\file_op\\)
 | Filename | Function Names | Script Type | Description |
 |---|---|---|---|
-| filecopy_with_timestamps.psm1 | Copy-ItemsWithTimeStamps | PowerShell | Copy files with time attributes. |
+| filecopy_different_size_only.psm1 | Copy-ItemsChangedSizeOnly | PowerShell | Copy files excluding files with same file size (completes the only option Robocopy is missing, "/XT" to exclude files with changed time attributes with same size) |
+| filecopy_with_timestamps.psm1 | Copy-ItemsWithTimeStamps | PowerShell | Copy files with time attributes. (Robocopy can perform similar operation except prompting) |
 | filename_trim_leading_trailing_spaces.psm1 | Rename-FileNames | PowerShell | Trim leading and trailing spaces in filename of specified file or all files under a directory. |
 
 ## Python Snippets (snippets\\python\\)
