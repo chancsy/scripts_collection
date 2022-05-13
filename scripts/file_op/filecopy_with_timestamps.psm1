@@ -169,6 +169,9 @@ function Copy-ItemsWithTimeStamps {
         Write-Debug "Source path is a file"
     }
 
+    if (-Not (Test-Path -LiteralPath (Join-Path -Path $Src_Resolved -ChildPath "*"))) {
+        Throw "Source folder is empty"
+    }
     $list = Build-FileList -Path $Src_Resolved -Recurse $Recurse
     Debug-DisplayList $list
     $list | ForEach-Object {
