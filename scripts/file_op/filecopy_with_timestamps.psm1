@@ -58,6 +58,9 @@ function Copy-ItemsWithTimeStampsCore {
         if (((Get-Item -LiteralPath $File) -is [System.IO.DirectoryInfo]) -and (Get-Item -LiteralPath $Dest) -is [System.IO.FileInfo]) {
             Throw $("$Dest - A file exists with the same folder name to be copied and might affect copy operation, script will now terminate")
         }
+        if (((Get-Item -LiteralPath $File) -is [System.IO.FileInfo]) -and (Get-Item -LiteralPath $Dest) -is [System.IO.DirectoryInfo]) {
+            Throw $("$Dest - A folder exists with the same file name to be copied and might affect copy operation, script will now terminate")
+        }
     }
 
     $continue = 'n'
