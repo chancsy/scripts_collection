@@ -18,6 +18,11 @@
 | filecopy_with_timestamps.psm1 | Copy-ItemsWithTimeStamps | PowerShell | Copy files with time attributes. (Robocopy can perform similar operation except prompting) |
 | filename_trim_leading_trailing_spaces.psm1 | Rename-FileNames | PowerShell | Trim leading and trailing spaces in filename of specified file or all files under a directory. |
 
+## Python (scripts\\python\\)
+| Filename | Function Names | Script Type | Description |
+|---|---|---|---|
+| pip_list_outdated_and_update.ps1 | - | PowerShell | Update pip packages (all / one-by-one) |
+
 ## Python Snippets (snippets\\python\\)
 | Filename | Description |
 |---|---|
