@@ -23,6 +23,11 @@
 |---|---|---|---|
 | pip_list_outdated_and_update.ps1 | - | PowerShell | Update pip packages (all / one-by-one) |
 
+## Windows (scripts\\windows\\)
+| Filename | Function Names | Script Type | Description |
+|---|---|---|---|
+| remove_recent_wallpaper.ps1 | - | PowerShell | Select & remove wallpaper history from HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers |
+
 ## Python Snippets (snippets\\python\\)
 | Filename | Description |
 |---|---|
