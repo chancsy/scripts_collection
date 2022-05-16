@@ -159,7 +159,7 @@ function Copy-ItemsDifferentSizeOnly {
 
     # Resolve path of $Dest
     if ([System.IO.Path]::IsPathRooted($Dest)) {
-        [System.IO.DirectoryInfo]$Dest_Resolved = $Src
+        [System.IO.DirectoryInfo]$Dest_Resolved = $Dest
     } else {
         [System.IO.FileInfo]$Dest_Resolved = Join-Path -Path $PWD -ChildPath $Dest
     }
