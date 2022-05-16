@@ -16,7 +16,7 @@ $update_list | ForEach-Object {
     $update_list_name_only += @($_.Substring(0, $_.IndexOf(" ")))
 }
 
-Write-Host 'Above updates, proceed? (answering yes will prompt for each package)? [A=All/Y=Yes/N=No]'
+Write-Host 'Above updates found, proceed? (answering yes will prompt for each package)? [A=All/Y=Yes/N=No]'
 do {
     $key = [Console]::ReadKey($true)
     $value = $key.KeyChar
@@ -24,9 +24,14 @@ do {
 
 # Update all packages
 if ($value -eq 'a') {
-    Write-Host "Updating all packages..."
+    $PackageCounter = 0
+    $TotalPackageCount = $update_list_name_only.length
+    # Write-Host "Updating all packages..."
     $update_list_name_only | ForEach-Object {
-        pip install -U $_
+        Write-Progress -Activity "Updating pip packages..." -Status $("Installing $_... ($($PackageCounter+1)/$TotalPackageCount)") -PercentComplete (100*$PackageCounter/$TotalPackageCount)
+        pip install -U --quiet $_
+        $PackageCounter++
+        return
     }
     return
 }
