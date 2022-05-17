@@ -2,7 +2,7 @@
 
 import os
 dirname = os.path.dirname(__file__)
-scripts = [f for f in os.listdir(dirname) if (os.path.isfile(os.path.join(dirname, f)) and (f != os.path.basename(__file__)))]
+scripts = [f for f in os.listdir(dirname) if (os.path.isfile(os.path.join(dirname, f)) and (f != os.path.basename(__file__)) and (f != 'constants.py'))]
 
 for i in range(0, len(scripts)):
     script = os.path.join(dirname, scripts[i])
