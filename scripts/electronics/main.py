@@ -1,16 +1,8 @@
-# Script selector
-
-scripts = [
-  "LM317_Rfb_E24.py",
-  "LM317_Rfb_E48.py",
-  "Vdivider_E24.py",
-  "Vdivider_E24_with_Ilimit.py",
-  "Vdivider_E48.py",
-  "Vdivider_E48_with_Ilimit.py",
-]
+# # Script selector
 
 import os
 dirname = os.path.dirname(__file__)
+scripts = [f for f in os.listdir(dirname) if (os.path.isfile(os.path.join(dirname, f)) and (f != os.path.basename(__file__)))]
 
 for i in range(0, len(scripts)):
     script = os.path.join(dirname, scripts[i])
