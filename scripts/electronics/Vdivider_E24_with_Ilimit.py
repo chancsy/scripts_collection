@@ -1,4 +1,4 @@
-# Calculate E24 resistor values combinations for voltage divider with current limit
+# Voltage divider - resistor values combinations with current limit (E24)
 
 def try_import(module_name):
     # Try to import module, exit script with installation information if module not found
@@ -18,7 +18,7 @@ resistor_list = E24_list
 
 pt = try_import("prettytable")
 
-print("Calculate E24 resistor values combinations for voltage divider with current limit")
+print("Voltage divider - resistor values combinations with current limit (E24)")
 print("")
 print("Vin")
 print(" ┬ ")

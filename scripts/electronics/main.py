@@ -9,7 +9,7 @@ for i in range(0, len(scripts)):
     with open(script, encoding="utf8") as file:
         firstline = file.readlines()[0].rstrip()
     file.close()
-    print(str(i+1) + " - " + scripts[i] + " " + firstline)
+    print(str(i+1) + " - " + firstline.replace("# ",""))
 
 selection = int(input("Select script: "))-1
 

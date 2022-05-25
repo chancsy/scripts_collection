@@ -1,4 +1,4 @@
-# Calculate E24 resistor values combinations for voltage divider
+# Voltage divider - resistor values combinations (E24)
 
 def try_import(module_name):
     # Try to import module, exit script with installation information if module not found

@@ -1,4 +1,4 @@
-# Calculate E24 feedback resistor values combinations for LM317
+# LM317 - feedback resistor values combinations (E24)
 
 def try_import(module_name):
     # Try to import module, exit script with installation information if module not found
@@ -18,7 +18,7 @@ resistor_list = E24_list
 
 pt = try_import("prettytable")
 
-print("Calculate E24 feedback resistor values combinations for LM317")
+print("LM317 - feedback resistor values combinations (E24)")
 print("")
 print("        ┌───────┐")
 print("Vin >───┤  Reg  ├────┬───> Vout")
